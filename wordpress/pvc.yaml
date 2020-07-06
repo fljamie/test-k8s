@@ -4,7 +4,6 @@ metadata:
   name: wp-pv-claim
   labels:
     app: wordpress
-  namespace: lc2a_website
 spec:
   accessModes:
     - ReadWriteOnce

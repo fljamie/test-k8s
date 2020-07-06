@@ -4,11 +4,10 @@ metadata:
   name: wordpress
   labels:
     app: wordpress
-  namespace: lc2a_website
 spec:
   ports:
     - port: 80
   selector:
     app: wordpress
     tier: frontend
-  type: LoadBalancer
+  type: NodePort
