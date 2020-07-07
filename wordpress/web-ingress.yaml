@@ -1,0 +1,16 @@
+# Author: Billy Lieberman <wlieberman@gmail.com>
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: wordpress-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+    - host: lc2a.billylieberman.com # Update this value to reflect the fqdn of your site
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: wordpress
+              servicePort: 80
