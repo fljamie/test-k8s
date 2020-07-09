@@ -3,7 +3,7 @@ kind: Kustomization
 bases:
 - mysql
 - wordpress
-namespace: lc2a-website
+namespace: lc2a-dev
 secretGenerator:
 - name: mysql-pass
   literals:
