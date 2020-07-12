@@ -4,4 +4,4 @@ resources:
 - pvc.yaml
 - deployment.yaml
 - service.yaml
-- web-ingress.yaml
+- web-ingress-https.yaml

@@ -1,0 +1,42 @@
+# Author: Billy Lieberman <wlieberman@gmail.com>
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: wordpress-ingress-secure
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`lc2a-dev.billylieberman.com`) && PathPrefix(`/`)
+    kind: Rule
+    services:
+    - name: wordpress
+      port: 80
+  tls:
+    certResolver: myresolver
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: wordpress-ingress-redirect
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+---
+# Author: Billy Lieberman <wlieberman@gmail.com>
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: wordpress-ingress
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`lc2a-dev.billylieberman.com`) && PathPrefix(`/`)
+    kind: Rule
+    services:
+    - name: wordpress
+      port: 80
+    middlewares:
+      - name: wordpress-ingress-redirect
