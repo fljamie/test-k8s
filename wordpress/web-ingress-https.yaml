@@ -7,7 +7,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-  - match: Host(`lc2a.billylieberman.com`) && PathPrefix(`/`)
+  - match: Host(`www.lc2a.org`) && PathPrefix(`/`)
     kind: Rule
     services:
     - name: wordpress
@@ -33,7 +33,7 @@ spec:
   entryPoints:
     - web
   routes:
-  - match: Host(`lc2a.billylieberman.com`) && PathPrefix(`/`)
+  - match: Host(`www.lc2a.org`) && PathPrefix(`/`)
     kind: Rule
     services:
     - name: wordpress
