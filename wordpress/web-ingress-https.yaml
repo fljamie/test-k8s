@@ -15,6 +15,25 @@ spec:
   tls:
     certResolver: myresolver
 ---
+# Author: Billy Lieberman <wlieberman@gmail.com>
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: wordpress-ingress-secure-nowww
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`lc2a.org`) && PathPrefix(`/`)
+    kind: Rule
+    services:
+    - name: wordpress
+      port: 80
+    middlewares:
+      - name: wordpress-ingress-redirect
+  tls:
+    certResolver: myresolver
+---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
@@ -34,6 +53,23 @@ spec:
     - web
   routes:
   - match: Host(`www.lc2a.org`) && PathPrefix(`/`)
+    kind: Rule
+    services:
+    - name: wordpress
+      port: 80
+    middlewares:
+      - name: wordpress-ingress-redirect
+---
+# Author: Billy Lieberman <wlieberman@gmail.com>
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: wordpress-ingress-nowww
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`lc2a.org`) && PathPrefix(`/`)
     kind: Rule
     services:
     - name: wordpress
