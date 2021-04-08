@@ -7,11 +7,30 @@ spec:
   entryPoints:
     - websecure
   routes:
-  - match: Host(`lc2a.billylieberman.com`) && PathPrefix(`/`)
+  - match: Host(`www.lc2a.org`) && PathPrefix(`/`)
     kind: Rule
     services:
     - name: wordpress
       port: 80
+  tls:
+    certResolver: myresolver
+---
+# Author: Billy Lieberman <wlieberman@gmail.com>
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: wordpress-ingress-secure-nowww
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`lc2a.org`) && PathPrefix(`/`)
+    kind: Rule
+    services:
+    - name: wordpress
+      port: 80
+    middlewares:
+      - name: wordpress-ingress-redirect
   tls:
     certResolver: myresolver
 ---
@@ -33,7 +52,24 @@ spec:
   entryPoints:
     - web
   routes:
-  - match: Host(`lc2a.billylieberman.com`) && PathPrefix(`/`)
+  - match: Host(`www.lc2a.org`) && PathPrefix(`/`)
+    kind: Rule
+    services:
+    - name: wordpress
+      port: 80
+    middlewares:
+      - name: wordpress-ingress-redirect
+---
+# Author: Billy Lieberman <wlieberman@gmail.com>
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: wordpress-ingress-nowww
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`lc2a.org`) && PathPrefix(`/`)
     kind: Rule
     services:
     - name: wordpress
